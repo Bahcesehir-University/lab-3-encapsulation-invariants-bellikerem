@@ -90,8 +90,9 @@ public:
         if(owner.empty()){
             throw invalid_argument("Owner name cannot be empty");
         }
-        if (initialBalance < 0)
+        if (initialBalance < 0){
             throw invalid_argument("Invalid Balance cannot be negative");
+        }
         
         owner_ = owner;
         balance_ = initialBalance;
@@ -117,10 +118,9 @@ public:
         
         // TODO: Implement
         balance_ += amount;
-        if (amount <= 0)
+        if (amount <= 0){
             throw invalid_argument("Invalid Amount must be positive");
-        
-        
+        }
     }
 
     // Withdraw money from the account.
@@ -130,10 +130,12 @@ public:
         
         // TODO: Implement
         balance_ -= amount;
-        if (amount <= 0)
+        if (amount <= 0){
             throw invalid_argument("Withdrawal amount must be positive");
-        if (amount > balance_)
+        }
+        if (amount > balance_){
             throw runtime_error("Insufficient Funds");
+        }
         
     }
 
@@ -143,8 +145,12 @@ public:
     void transfer(BankAccount& other, double amount) {
         
         // TODO: Implement using withdraw() and deposit()
-        if (amount <= 0)
+        if (amount <= 0){
             throw invalid_argument("Transfer amount must be positive");
+        }
+        if (amount > balance_){
+            throw runtime_error("Insufficient Funds");
+        }
         
         withdraw(amount);
         other.deposit(amount);
