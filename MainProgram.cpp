@@ -82,79 +82,53 @@ private:
     double balance_;
 
 public:
-    // Constructor: initialize with owner name and starting balance.
-    // Throw std::invalid_argument if owner is empty or balance < 0
     BankAccount(const string& owner, double initialBalance) {
-        
-        // TODO: Validate and set members
-        if(owner.empty()){
+        if (owner.empty()) {
             throw invalid_argument("Owner name cannot be empty");
         }
-        if (initialBalance < 0){
-            throw invalid_argument("Invalid Balance cannot be negative");
+        if (initialBalance < 0) {
+            throw invalid_argument("Initial balance cannot be negative");
         }
-        
+
         owner_ = owner;
         balance_ = initialBalance;
     }
 
-    // Getter: return the owner's name
     string getOwner() const {
-        
-        // TODO: Implement
         return owner_;
     }
 
-    // Getter: return the current balance
     double getBalance() const {
-        
-        // TODO: Implement
         return balance_;
     }
 
-    // Deposit money into the account.
-    // Throw std::invalid_argument if amount <= 0
     void deposit(double amount) {
-        
-        // TODO: Implement
-        balance_ += amount;
-        if (amount <= 0){
-            throw invalid_argument("Invalid Amount must be positive");
+        if (amount <= 0) {
+            throw invalid_argument("Deposit amount must be positive");
         }
+
+        balance_ += amount;
     }
 
-    // Withdraw money from the account.
-    // Throw std::invalid_argument if amount <= 0
-    // Throw std::runtime_error if insufficient funds
     void withdraw(double amount) {
-        
-        // TODO: Implement
-        balance_ -= amount;
-        if (amount <= 0){
+        if (amount <= 0) {
             throw invalid_argument("Withdrawal amount must be positive");
         }
-        if (amount > balance_){
-            throw runtime_error("Insufficient Funds");
+        if (amount > balance_) {
+            throw runtime_error("Insufficient funds");
         }
-        
+
+        balance_ -= amount;
     }
 
-    // Transfer money from this account to another.
-    // Throw std::invalid_argument if amount <= 0
-    // Throw std::runtime_error if insufficient funds
     void transfer(BankAccount& other, double amount) {
-        
-        // TODO: Implement using withdraw() and deposit()
-        if (amount <= 0){
+        if (amount <= 0) {
             throw invalid_argument("Transfer amount must be positive");
         }
-        if (amount > balance_){
-            throw runtime_error("Insufficient Funds");
-        }
-        
+
+        // reuse logic safely
         withdraw(amount);
         other.deposit(amount);
-        
     }
 };
 
